@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AERIAL PREDATOR // MIDDLE EAST MONITOR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Barlow+Condensed:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; background: #000; }
+
+    /* ── Nav bar ── */
+    #ap-bar {
+      height: 44px;
+      background: rgba(0,0,0,0.95);
+      border-bottom: 1px solid #ff3b30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 10;
+    }
+
+    .ap-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+
+    .ap-mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 700;
+      color: #ff3b30; border: 1px solid #ff3b30;
+      padding: 2px 6px; letter-spacing: 0.05em;
+    }
+
+    .ap-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 800;
+      letter-spacing: 0.25em; text-transform: uppercase; color: #fff;
+    }
+
+    .ap-right { display: flex; align-items: center; gap: 16px; }
+
+    .ap-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #a1a1a1;
+    }
+
+    .ap-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 0.12em;
+      color: #ff3b30; border: 1px solid rgba(255,59,48,0.3);
+      padding: 3px 8px; text-transform: uppercase;
+    }
+
+    .ap-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #ff3b30; box-shadow: 0 0 6px #ff3b30;
+      display: inline-block; animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .ap-return {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: #a1a1a1; text-decoration: none;
+      border: 1px solid #3a3a3a; padding: 6px 14px;
+      transition: all 0.15s ease;
+    }
+
+    .ap-return:hover { color: #fff; border-color: #ff3b30; background: rgba(255,59,48,0.05); }
+
+    /* ── Iframe ── */
+    #ap-frame {
+      width: 100%; height: calc(100vh - 44px);
+      border: none; display: block;
+    }
+
+    /* ── Fallback portal (shown if iframe blocked) ── */
+    #ap-fallback {
+      display: none;
+      width: 100%; height: calc(100vh - 44px);
+      background: #000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #ap-fallback::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,59,48,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,59,48,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .portal-card {
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(255,59,48,0.25);
+      background: rgba(13,13,13,0.95);
+      padding: 48px 56px;
+      max-width: 560px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .portal-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, #ff3b30, transparent);
+    }
+
+    .portal-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: #ff3b30;
+      margin-bottom: 20px;
+    }
+
+    .portal-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px; font-weight: 800;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: #fff; margin-bottom: 8px;
+    }
+
+    .portal-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em;
+      color: #a1a1a1; margin-bottom: 24px;
+    }
+
+    .portal-desc {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; line-height: 1.8;
+      color: #666; margin-bottom: 36px;
+    }
+
+    .portal-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #fff; background: #ff3b30;
+      border: 1px solid #ff3b30; padding: 14px 32px;
+      text-decoration: none; transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .portal-btn:hover { background: transparent; color: #ff3b30; }
+
+    .portal-note {
+      margin-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      color: #3a3a3a; text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      .ap-name { display: none; }
+      .ap-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="ap-bar">
+    <a href="/" class="ap-brand">
+      <span class="ap-mark">AP</span>
+      <span class="ap-name">Aerial Predator</span>
+    </a>
+    <div class="ap-right">
+      <span class="ap-label">MIDDLE EAST MONITOR</span>
+      <span class="ap-badge"><span class="ap-dot"></span>LIVE</span>
+      <a href="/" class="ap-return">← Return to Base</a>
+    </div>
+  </div>
+
+  <iframe
+    id="ap-frame"
+    src="https://monitor-the-situation.com/middle-east"
+    title="Middle East Situation Monitor"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+  ></iframe>
+
+  <div id="ap-fallback">
+    <div class="portal-card">
+      <div class="portal-tag">[ AP-FEED ] // External Resource</div>
+      <div class="portal-title">Middle East Monitor</div>
+      <div class="portal-subtitle">monitor-the-situation.com/middle-east</div>
+      <div class="portal-desc">
+        Real-time situational awareness for the Middle East region. This resource tracks active conflict zones, displacement data, and geopolitical developments across the theater.
+      </div>
+      <a class="portal-btn" href="https://monitor-the-situation.com/middle-east" target="_blank" rel="noopener noreferrer">
+        // Open Live Feed ↗
+      </a>
+      <div class="portal-note">Opens in a new tab — external resource</div>
+    </div>
+  </div>
+
+  <script>
+    // Detect iframe block — if load fires but content is inaccessible due to X-Frame-Options,
+    // the browser fires a load event but the frame will be empty/errored.
+    const frame = document.getElementById('ap-frame');
+    const fallback = document.getElementById('ap-fallback');
+    let loaded = false;
+
+    // Timeout fallback — if the iframe doesn't signal a successful load within 6s, show portal
+    const timer = setTimeout(() => {
+      if (!loaded) showFallback();
+    }, 6000);
+
+    frame.addEventListener('load', () => {
+      loaded = true;
+      clearTimeout(timer);
+      // Try accessing content — cross-origin block will throw
+      try {
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        if (!doc || doc.body === null) {
+          showFallback();
+        }
+      } catch(e) {
+        // Cross-origin error = iframe loaded successfully (external site allowing embed)
+        // No action needed
+      }
+    });
+
+    frame.addEventListener('error', () => showFallback());
+
+    function showFallback() {
+      frame.style.display = 'none';
+      fallback.style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
